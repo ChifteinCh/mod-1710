@@ -1,12 +1,12 @@
 {
-  "name": "Forge 1.7.10 Dev",
-  "build": {
-    "dockerfile": "Dockerfile",
-    "context": "."
-  },
-  "image": "mcr.microsoft.com/devcontainers/java:0-8",
+  "name": "Forge 1.7.10 Modern",
+  "image": "eclipse-temurin:8-jdk",
   "features": {
-    "gradle": {"version": "2.2.1"}
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "8",
+      "installGradle": true,
+      "gradleVersion": "2.14.1"
+    }
   },
   "customizations": {
     "vscode": {
@@ -16,7 +16,8 @@
       ]
     }
   },
-  "postCreateCommand": "./gradlew setupDecompWorkspace --refresh-dependencies",
+  "postCreateCommand": "apt-get update && apt-get install -y libc6:i386 libncurses5:i386 libstdc++6:i386 zlib1g:i386 && ./gradlew setupDecompWorkspace",
   "forwardPorts": [5005],
-  "runArgs": ["--memory=8g"]
+  "runArgs": ["--memory=8g"],
+  "remoteUser": "vscode"
 }
